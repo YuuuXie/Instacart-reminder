@@ -3,12 +3,12 @@ import smtplib
 from selenium import webdriver
 from bs4 import BeautifulSoup
 
-def check(email, password):
+def check(email, email_pwd, account, account_pwd):
     # login to email
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.ehlo()
     server.starttls()
-    server.login(email, password)
+    server.login(email, email_pwd)
 
     # get driver
     url = "https://www.instacart.com"
@@ -18,8 +18,8 @@ def check(email, password):
 
     # log in
     driver.find_element_by_partial_link_text("Log in").click()
-    driver.find_element_by_id("nextgen-authenticate.all.log_in_email").send_keys(email)
-    driver.find_element_by_id("nextgen-authenticate.all.log_in_password").send_keys(password)
+    driver.find_element_by_id("nextgen-authenticate.all.log_in_email").send_keys(account)
+    driver.find_element_by_id("nextgen-authenticate.all.log_in_password").send_keys(account_pwd)
     driver.find_element_by_xpath("//button[@type='submit']").click()
 
     # check_delivery_times
@@ -45,4 +45,4 @@ def check(email, password):
     
 
 if __name__ == "__main__":
-    check(sys.argv[1], sys.argv[2])
+    check(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])

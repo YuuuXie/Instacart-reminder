@@ -1,7 +1,6 @@
-import requests, time, sys, datetime, os
+import time, sys, datetime, os
 import smtplib
 from selenium import webdriver
-from bs4 import BeautifulSoup
 
 def check(email, email_pwd, account, account_pwd):
     # login to email

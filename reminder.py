@@ -5,7 +5,7 @@ from selenium import webdriver
 def check(account, account_pwd, email, email_pwd):
     # get driver
     url = "https://www.instacart.com"
-    driver = webdriver.Chrome(executable_path="../chrome_driver/chromedriver")
+    driver = webdriver.Chrome(executable_path="./chromedriver")
     driver.get(url)
     time.sleep(5)
 

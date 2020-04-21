@@ -5,9 +5,10 @@ from selenium import webdriver
 def check(account, account_pwd, email, email_pwd):
     # get driver
     url = "https://www.instacart.com"
-    driver = webdriver.Chrome(executable_path="../chrome_driver/chromedriver")
+    driver = webdriver.Firefox(executable_path="./geckodriver")
+                               #firefox_binary="../firefox/firefox")
     driver.get(url)
-    time.sleep(5)
+    time.sleep(10)
 
     # log in
     driver.find_element_by_partial_link_text("Log in").click()
@@ -22,18 +23,22 @@ def check(account, account_pwd, email, email_pwd):
     # check_delivery_times
     while 'Exit' not in os.listdir('./'): # create an Exit file to exit
 
-        time.sleep(10)
+        time.sleep(30)
         driver.find_element_by_xpath("//a[@href='/market-basket/info?tab=delivery']").click()
-        time.sleep(10)
+        time.sleep(30)
 
         try:
             no_delivery_times = driver.find_element_by_xpath("//img[@alt='No delivery times available']")
             print('No delivery times', flush=True)
         except:
-            time_now = datetime.datetime.now()
-            msg = f"Delivery available: {time_now}"
-            server.sendmail(email, email, msg)
-            print('Yes', time_now, flush=True)
+            try:
+                no_delivery_times = driver.find_element_by_xpath("//img[@alt='All delivery windows are full']")
+                print('No delivery times', flush=True)
+            except:
+                time_now = datetime.datetime.now()
+                msg = f"Delivery available: {time_now}"
+                server.sendmail(email, email, msg)
+                print('Yes', time_now, flush=True)
 
         driver.find_element_by_xpath("//button[@aria-label='Close modal']").click()
         time.sleep(45)
